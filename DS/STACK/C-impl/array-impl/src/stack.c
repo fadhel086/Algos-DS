@@ -15,7 +15,7 @@ struct stack* create_stack(int size)
     s->array = malloc(sizeof(char) * size);
     if (!s->array) {
             printf("Stack error:Cannot initialize memory for stack.\n");
-            return s;
+            return (struct stack *)s->array;
         }
     return s;
 }
