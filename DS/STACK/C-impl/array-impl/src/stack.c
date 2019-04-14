@@ -1,9 +1,10 @@
-#include <stack.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
+#include "stack.h"
 
-struct stack* create_stack(int size)
+struct stack* create_stack(int stack_size, int member_size)
 {
     struct stack *s = malloc(sizeof(struct stack));
     if (!s) {
@@ -11,8 +12,9 @@ struct stack* create_stack(int size)
         return s;
     }
     s->top = -1;
-    s->capacity = size;
-    s->array = malloc(sizeof(char) * size);
+    s->capacity = stack_size;
+    s->member_size = member_size;
+    s->array = malloc(sizeof(member_size) * s->capacity);
     if (!s->array) {
             printf("Stack error:Cannot initialize memory for stack.\n");
             return (struct stack *)s->array;
@@ -36,32 +38,48 @@ int is_empty(struct stack *s)
     return 0;
 }
 
-void push(struct stack *s, char data)
+int push(struct stack *s, void *data)
 {
+    void *location;
+
     if (is_full(s)) {
         printf("Stack error: Stack Overflow.\n");
-        return;
+        return 1;
     }
+
     s->top++;
-    s->array[s->top] = data;
+    /* place to write the data */
+    location = (char  *)s->array + (s->top * s->member_size);
+    memcpy(location, data, s->member_size);
+    return 0;
 }
 
-char pop(struct stack *s)
+int pop(struct stack *s, void *data)
 {
+    void *data_src;
+
     if (is_empty(s)) {
         printf("Stack error: Stack Underflow.\n");
         return -1;
     }
-    return s->array[s->top--];
+
+    data_src = (char *)s->array + (s->top * s->member_size);
+    memcpy(data, data_src, s->member_size);
+    s->top--;
+    return 0;
 }
 
-char peek(struct stack *s)
+int peek(struct stack *s, void *data)
 {
+    void *data_src;
+
     if (is_empty(s)) {
         printf("Stack error: Stack is empty.\n");
         return -1;
     }
-    return s->array[s->top];
+    data_src = s->array + (s->top * s->member_size);
+    memcpy(data, data_src, s->member_size);
+    return 0;
 }
 
 void remove_stack(struct stack *s)

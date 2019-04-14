@@ -4,15 +4,16 @@
 struct stack {
     int top;
     int capacity;
-    char *array;
+    int member_size;
+    void *array;
 };
 
-struct stack* create_stack(int size);
+struct stack* create_stack(int size, int member_size);
 void remove_stack(struct stack *s);
 int is_empty(struct stack *s);
 int is_full(struct stack *s);
-void push(struct stack *s, char data);
-char pop(struct stack *s);
-char peek(struct stack *s);
+int push(struct stack *s, void *data);
+int pop(struct stack *s, void *data);
+int peek(struct stack *s, void *data);
 
 #endif
