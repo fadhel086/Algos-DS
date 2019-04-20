@@ -4,7 +4,7 @@
 #include <string.h>
 #include "stack.h"
 
-struct stack* create_stack(int stack_size, int member_size)
+struct stack* create_stack(unsigned stack_size, unsigned member_size)
 {
     struct stack *s = malloc(sizeof(struct stack));
     if (!s) {
@@ -25,17 +25,17 @@ struct stack* create_stack(int stack_size, int member_size)
 int is_full(struct stack *s)
 {
     if (s->top == (s->capacity - 1)){
-        return 1;
+        return STACK_FULL;
     }
-    return 0;
+    return STACK_NOT_FULL;
 }
 
 int is_empty(struct stack *s)
 {
     if (s->top == -1){
-        return 1;
+        return STACK_EMPTY;
     }
-    return 0;
+    return STACK_NOT_EMPTY;
 }
 
 int push(struct stack *s, void *data)
@@ -44,14 +44,14 @@ int push(struct stack *s, void *data)
 
     if (is_full(s)) {
         printf("Stack error: Stack Overflow.\n");
-        return 1;
+        return STACK_FULL;
     }
 
     s->top++;
     /* place to write the data */
     location = (char  *)s->array + (s->top * s->member_size);
     memcpy(location, data, s->member_size);
-    return 0;
+    return SUCCESS;
 }
 
 int pop(struct stack *s, void *data)
@@ -60,13 +60,13 @@ int pop(struct stack *s, void *data)
 
     if (is_empty(s)) {
         printf("Stack error: Stack Underflow.\n");
-        return -1;
+        return STACK_EMPTY;
     }
 
     data_src = (char *)s->array + (s->top * s->member_size);
     memcpy(data, data_src, s->member_size);
     s->top--;
-    return 0;
+    return SUCCESS;
 }
 
 int peek(struct stack *s, void *data)
@@ -75,11 +75,11 @@ int peek(struct stack *s, void *data)
 
     if (is_empty(s)) {
         printf("Stack error: Stack is empty.\n");
-        return -1;
+        return STACK_EMPTY;
     }
     data_src = s->array + (s->top * s->member_size);
     memcpy(data, data_src, s->member_size);
-    return 0;
+    return SUCCESS;
 }
 
 void remove_stack(struct stack *s)
