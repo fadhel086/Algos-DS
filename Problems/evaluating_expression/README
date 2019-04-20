@@ -1,0 +1,8 @@
+The excercise takes an expression in infix-notation and converts to post-fix for evaluation.
+Expression is entered as 111 + 222 * 64 / 6.
+Invalid expression will result in garbage.
+
+TOBE DONE:
+* Handle brackets.
+* Use string library functions to parse operators and operands while expression evaluation.
+* Re-write the code, to focus more on DATA, rather than on logic.
