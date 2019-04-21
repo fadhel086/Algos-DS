@@ -1,0 +1,8 @@
+This is a programming excercise in implementing Bulls and Cows.
+More details of the game can be seen at
+https://en.wikipedia.org/wiki/Bulls_and_Cows
+
+In the forward problem,
+Computer guesses a unique 4 digit number and user is given 8 chances to guess it correctly.
+For each user guess and the number of bulls and cows are displayed.
+
