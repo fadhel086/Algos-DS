@@ -6,3 +6,6 @@ In the forward problem,
 Computer guesses a unique 4 digit number and user is given 8 chances to guess it correctly.
 For each user guess and the number of bulls and cows are displayed.
 
+In the Reverse problem.
+User Guesses a unique 4 digit number and computer guesses it within 8 Chances.
+For each computer try, user inputs the number of bulls and cows.
